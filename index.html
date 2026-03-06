@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Yariv Garala — Backend Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=IBM+Plex+Mono:wght@400;500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #F8F7F3;
+      --bg-card:   #FFFFFF;
+      --ink:       #18181A;
+      --ink-soft:  #6B6B72;
+      --accent:    #0D7A5F;
+      --accent-lt: #E3F4EF;
+      --rule:      #E2E0D8;
+      --mono:      'IBM Plex Mono', monospace;
+      --serif:     'Playfair Display', serif;
+      --sans:      'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 4rem;
+      background: rgba(248,247,243,0.88);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--rule);
+    }
+    .nav-logo {
+      font-family: var(--mono); font-size: .85rem; font-weight: 500;
+      color: var(--accent); letter-spacing: .05em;
+    }
+    .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+    .nav-links a {
+      font-size: .82rem; font-weight: 500; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--ink-soft);
+      text-decoration: none; transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 72px;
+    }
+    .hero-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 5rem 3rem 5rem 4rem;
+      border-right: 1px solid var(--rule);
+    }
+    .hero-eyebrow {
+      font-family: var(--mono); font-size: .78rem; color: var(--accent);
+      letter-spacing: .14em; text-transform: uppercase; margin-bottom: 1.5rem;
+      opacity: 0; animation: fadeUp .6s .1s forwards;
+    }
+    .hero-name {
+      font-family: var(--serif); font-size: clamp(3.2rem, 5.5vw, 5.5rem);
+      line-height: 1.08; font-weight: 900; margin-bottom: 1.6rem;
+      opacity: 0; animation: fadeUp .7s .2s forwards;
+    }
+    .hero-name em { color: var(--accent); font-style: italic; }
+    .hero-tagline {
+      font-size: 1.05rem; color: var(--ink-soft); max-width: 400px;
+      margin-bottom: 2.8rem; font-weight: 400;
+      opacity: 0; animation: fadeUp .7s .35s forwards;
+    }
+    .hero-contacts {
+      display: flex; flex-wrap: wrap; gap: .75rem;
+      opacity: 0; animation: fadeUp .7s .5s forwards;
+    }
+    .contact-pill {
+      display: inline-flex; align-items: center; gap: .45rem;
+      font-family: var(--mono); font-size: .72rem; font-weight: 500;
+      padding: .45rem 1rem; border-radius: 2rem;
+      border: 1px solid var(--rule); background: var(--bg-card);
+      color: var(--ink); text-decoration: none;
+      transition: border-color .2s, color .2s, background .2s;
+    }
+    .contact-pill:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-lt); }
+    .contact-pill svg { width: 14px; height: 14px; }
+
+    .hero-right {
+      display: flex; flex-direction: column; justify-content: flex-end;
+      padding: 5rem 4rem 5rem 3rem;
+      opacity: 0; animation: fadeIn .9s .6s forwards;
+    }
+    .hero-stat-group { margin-bottom: 3.5rem; }
+    .hero-stat {
+      display: flex; align-items: baseline; gap: 1rem;
+      padding: 1.3rem 0; border-bottom: 1px solid var(--rule);
+    }
+    .hero-stat:first-child { border-top: 1px solid var(--rule); }
+    .stat-num {
+      font-family: var(--serif); font-size: 2.8rem; font-weight: 900;
+      color: var(--accent); min-width: 90px;
+    }
+    .stat-label { font-size: .85rem; color: var(--ink-soft); line-height: 1.4; }
+    .hero-stack-title {
+      font-family: var(--mono); font-size: .72rem; color: var(--ink-soft);
+      letter-spacing: .1em; text-transform: uppercase; margin-bottom: 1rem;
+    }
+    .stack-chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+    .chip {
+      font-family: var(--mono); font-size: .7rem;
+      padding: .3rem .75rem; border-radius: .25rem;
+      background: var(--ink); color: var(--bg);
+    }
+    .chip.light { background: var(--accent-lt); color: var(--accent); }
+
+    /* ── SECTION WRAPPER ── */
+    section { padding: 6rem 4rem; border-top: 1px solid var(--rule); }
+    .section-label {
+      font-family: var(--mono); font-size: .72rem; color: var(--accent);
+      letter-spacing: .14em; text-transform: uppercase; margin-bottom: .75rem;
+    }
+    .section-title {
+      font-family: var(--serif); font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 900; margin-bottom: 3.5rem; line-height: 1.15;
+    }
+
+    /* ── EXPERIENCE ── */
+    #experience .exp-card {
+      display: grid; grid-template-columns: 200px 1fr;
+      gap: 3rem; padding: 2.5rem 0; border-bottom: 1px solid var(--rule);
+    }
+    #experience .exp-card:last-child { border-bottom: none; }
+    .exp-meta { }
+    .exp-company {
+      font-family: var(--mono); font-size: .8rem; font-weight: 500;
+      color: var(--accent); margin-bottom: .3rem;
+    }
+    .exp-period {
+      font-size: .78rem; color: var(--ink-soft); margin-bottom: .5rem;
+    }
+    .exp-loc { font-size: .78rem; color: var(--ink-soft); }
+    .exp-title {
+      font-family: var(--serif); font-size: 1.5rem; font-weight: 700;
+      margin-bottom: 1rem; line-height: 1.2;
+    }
+    .exp-body { font-size: .92rem; color: var(--ink-soft); margin-bottom: 1.2rem; line-height: 1.75; }
+    .exp-bullets { list-style: none; padding: 0; }
+    .exp-bullets li {
+      font-size: .88rem; color: var(--ink-soft);
+      padding: .35rem 0 .35rem 1.2rem; position: relative; line-height: 1.65;
+    }
+    .exp-bullets li::before {
+      content: '→'; position: absolute; left: 0; color: var(--accent); font-size: .75rem; top: .45rem;
+    }
+    .tech-tags { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: 1.4rem; }
+    .tech-tag {
+      font-family: var(--mono); font-size: .68rem; padding: .25rem .65rem;
+      border-radius: .25rem; background: var(--accent-lt); color: var(--accent);
+      border: 1px solid rgba(13,122,95,.15);
+    }
+
+    /* ── PROJECTS / GITHUB ── */
+    #projects .project-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 1.5rem;
+    }
+    .project-card {
+      background: var(--bg-card); border: 1px solid var(--rule);
+      border-radius: .75rem; padding: 2rem;
+      transition: box-shadow .25s, transform .25s;
+      position: relative; overflow: hidden;
+    }
+    .project-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--accent);
+    }
+    .project-card:hover { box-shadow: 0 12px 40px rgba(0,0,0,.08); transform: translateY(-3px); }
+    .project-card-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+    .project-icon { font-size: 1.6rem; }
+    .project-links { display: flex; gap: .6rem; }
+    .project-link {
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1px solid var(--rule); display: flex; align-items: center; justify-content: center;
+      color: var(--ink-soft); text-decoration: none; transition: border-color .2s, color .2s;
+    }
+    .project-link:hover { border-color: var(--accent); color: var(--accent); }
+    .project-link svg { width: 14px; height: 14px; }
+    .project-name {
+      font-family: var(--mono); font-size: .95rem; font-weight: 500;
+      color: var(--ink); margin-bottom: .6rem;
+    }
+    .project-desc { font-size: .87rem; color: var(--ink-soft); line-height: 1.7; margin-bottom: 1.2rem; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+    .project-tag {
+      font-family: var(--mono); font-size: .65rem; padding: .2rem .55rem;
+      border-radius: .2rem; background: var(--bg); border: 1px solid var(--rule);
+      color: var(--ink-soft);
+    }
+
+    /* ── GITHUB STATS ── */
+    #github {
+      background: var(--ink);
+      color: var(--bg);
+      border-top: none;
+    }
+    #github .section-title { color: var(--bg); }
+    #github .section-label { color: #6EE7C0; }
+    .github-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: start;
+    }
+    .github-text p { font-size: .95rem; color: #A0A0A8; line-height: 1.8; margin-bottom: 1.5rem; }
+    .github-cta {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-family: var(--mono); font-size: .8rem; font-weight: 500;
+      padding: .75rem 1.5rem; border-radius: .35rem;
+      background: var(--accent); color: #fff; text-decoration: none;
+      transition: opacity .2s;
+    }
+    .github-cta:hover { opacity: .85; }
+    .github-stats-panel {
+      background: rgba(255,255,255,.04); border: 1px solid rgba(255,255,255,.1);
+      border-radius: .75rem; padding: 2rem;
+    }
+    .gh-stat-row {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: .9rem 0; border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+    .gh-stat-row:last-child { border-bottom: none; }
+    .gh-stat-label { font-family: var(--mono); font-size: .78rem; color: #6B6B7A; }
+    .gh-stat-val { font-family: var(--mono); font-size: .85rem; color: #6EE7C0; font-weight: 500; }
+    .lang-bar-wrap { margin-top: 1.5rem; }
+    .lang-bar-label {
+      display: flex; justify-content: space-between;
+      font-family: var(--mono); font-size: .72rem; color: #6B6B7A; margin-bottom: .4rem;
+    }
+    .lang-bar { height: 6px; background: rgba(255,255,255,.08); border-radius: 3px; overflow: hidden; margin-bottom: .9rem; }
+    .lang-bar-fill { height: 100%; border-radius: 3px; background: var(--accent); }
+    .lang-bar-fill.alt { background: #7C6AE8; }
+    .lang-bar-fill.alt2 { background: #E8A96A; }
+
+    /* ── ARTICLES ── */
+    #articles .articles-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;
+    }
+    .article-card {
+      border: 1px solid var(--rule); border-radius: .75rem; padding: 1.8rem;
+      background: var(--bg-card); text-decoration: none; color: inherit;
+      display: flex; flex-direction: column; gap: .8rem;
+      transition: box-shadow .25s, transform .25s;
+    }
+    .article-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,.07); transform: translateY(-2px); }
+    .article-tag {
+      font-family: var(--mono); font-size: .65rem; text-transform: uppercase;
+      letter-spacing: .1em; color: var(--accent);
+    }
+    .article-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 700; line-height: 1.35; }
+    .article-excerpt { font-size: .85rem; color: var(--ink-soft); line-height: 1.65; }
+    .article-footer {
+      display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: .8rem;
+      border-top: 1px solid var(--rule);
+    }
+    .article-date { font-family: var(--mono); font-size: .68rem; color: var(--ink-soft); }
+    .article-arrow { color: var(--accent); font-size: .9rem; }
+    .medium-cta {
+      margin-top: 2.5rem; text-align: center;
+    }
+    .medium-cta a {
+      display: inline-flex; align-items: center; gap: .6rem;
+      font-family: var(--mono); font-size: .8rem; font-weight: 500;
+      padding: .75rem 2rem; border-radius: .35rem;
+      border: 1.5px solid var(--ink); color: var(--ink); text-decoration: none;
+      transition: background .2s, color .2s;
+    }
+    .medium-cta a:hover { background: var(--ink); color: var(--bg); }
+
+    /* ── EDUCATION ── */
+    #education .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+    .edu-card {
+      border: 1px solid var(--rule); border-radius: .75rem; padding: 1.8rem;
+      background: var(--bg-card);
+    }
+    .edu-icon { font-size: 1.8rem; margin-bottom: .8rem; }
+    .edu-degree { font-family: var(--serif); font-size: 1.05rem; font-weight: 700; margin-bottom: .3rem; }
+    .edu-school { font-family: var(--mono); font-size: .75rem; color: var(--accent); margin-bottom: .5rem; }
+    .edu-desc { font-size: .85rem; color: var(--ink-soft); line-height: 1.6; }
+
+    /* ── SKILLS ── */
+    #skills .skills-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+    .skill-group {
+      background: var(--bg-card); border: 1px solid var(--rule);
+      border-radius: .75rem; padding: 1.6rem;
+    }
+    .skill-group-title {
+      font-family: var(--mono); font-size: .72rem; color: var(--accent);
+      letter-spacing: .1em; text-transform: uppercase; margin-bottom: 1rem;
+      padding-bottom: .75rem; border-bottom: 1px solid var(--rule);
+    }
+    .skill-item {
+      display: flex; align-items: center; gap: .6rem;
+      font-size: .85rem; padding: .3rem 0; color: var(--ink-soft);
+    }
+    .skill-item::before { content: '·'; color: var(--accent); font-size: 1.2rem; line-height: 1; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 3rem 4rem;
+      border-top: 1px solid var(--rule);
+      font-family: var(--mono); font-size: .75rem; color: var(--ink-soft);
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; } to { opacity: 1; }
+    }
+    .reveal { opacity: 0; transform: translateY(28px); transition: opacity .6s, transform .6s; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      #hero { grid-template-columns: 1fr; }
+      .hero-left { padding: 3rem 1.5rem; border-right: none; }
+      .hero-right { padding: 2rem 1.5rem; border-top: 1px solid var(--rule); }
+      section { padding: 4rem 1.5rem; }
+      #experience .exp-card { grid-template-columns: 1fr; gap: .5rem; }
+      .github-grid { grid-template-columns: 1fr; }
+      #education .edu-grid { grid-template-columns: 1fr; }
+      #skills .skills-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <span class="nav-logo">YG.dev</span>
+  <ul class="nav-links">
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#github">GitHub</a></li>
+    <li><a href="#articles">Articles</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Education</a></li>
+  </ul>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">// Backend Engineer · Tel Aviv, Israel</p>
+    <h1 class="hero-name">Yariv<br><em>Garala</em></h1>
+    <p class="hero-tagline">Building event-driven, distributed systems that scale — from architecture decisions to production delivery.</p>
+    <div class="hero-contacts">
+      <a class="contact-pill" href="mailto:yariv1052@gmail.com">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M2 7l10 7 10-7"/></svg>
+        yariv1052@gmail.com
+      </a>
+      <a class="contact-pill" href="https://github.com/yariv1052" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        GitHub
+      </a>
+      <a class="contact-pill" href="https://linkedin.com/in/yariv-garala" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
+      <a class="contact-pill" href="https://medium.com/@yariv1052" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75S24 8.83 24 12z"/></svg>
+        Medium
+      </a>
+      <a class="contact-pill" href="tel:0502298409">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 10.8a19.79 19.79 0 01-3.07-8.67A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92v2z"/></svg>
+        050-229-8409
+      </a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-stat-group">
+      <div class="hero-stat">
+        <span class="stat-num">3+</span>
+        <span class="stat-label">Years building cloud-native<br>production systems</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-num">∞</span>
+        <span class="stat-label">Microservices, queues &<br>distributed workflows shipped</span>
+      </div>
+      <div class="hero-stat">
+        <span class="stat-num">0→1</span>
+        <span class="stat-label">Built a full SaaS security<br>platform from scratch</span>
+      </div>
+    </div>
+    <p class="hero-stack-title">// Core Stack</p>
+    <div class="stack-chips">
+      <span class="chip">Python</span>
+      <span class="chip">FastAPI</span>
+      <span class="chip">RabbitMQ</span>
+      <span class="chip">MongoDB</span>
+      <span class="chip">Docker</span>
+      <span class="chip">AWS</span>
+      <span class="chip">Kubernetes</span>
+      <span class="chip light">Event-Driven</span>
+      <span class="chip light">Microservices</span>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERIENCE ── -->
+<section id="experience">
+  <div class="reveal">
+    <p class="section-label">// 01 — Experience</p>
+    <h2 class="section-title">Where I've<br>Shipped Things</h2>
+  </div>
+
+  <div class="exp-card reveal">
+    <div class="exp-meta">
+      <p class="exp-company">PTBOX</p>
+      <p class="exp-period">Aug 2022 – Present</p>
+      <p class="exp-loc">📍 Tel Aviv, Israel</p>
+    </div>
+    <div>
+      <h3 class="exp-title">Backend Engineer</h3>
+      <p class="exp-body">Cybersecurity-focused startup building a cloud-native Software Supply Chain Security platform from the ground up, across the full SDLC.</p>
+      <ul class="exp-bullets">
+        <li>Led design & implementation of an async, event-driven microservices platform (Python, FastAPI, RabbitMQ, MongoDB) integrating multiple third-party security scanners</li>
+        <li>Made backend architecture decisions balancing scalability, performance, and reliability under strict network and operational constraints</li>
+        <li>Improved system resilience through idempotent workflows, structured retries, DLQs, and fault-tolerant orchestration</li>
+        <li>Containerized and orchestrated production services using Docker Swarm with cloud-native principles</li>
+        <li>Worked extensively with package ecosystems (NPM, Yarn, PyPI, Maven, NuGet) and JFrog Artifactory</li>
+        <li>Ensured production-grade quality via unit, load & E2E testing (Unittest, mocking, K6) and continuous performance profiling</li>
+        <li>Leveraged AI-assisted development tools (Claude, Cursor) to accelerate delivery while maintaining code quality</li>
+      </ul>
+      <div class="tech-tags">
+        <span class="tech-tag">Python</span>
+        <span class="tech-tag">FastAPI</span>
+        <span class="tech-tag">RabbitMQ</span>
+        <span class="tech-tag">MongoDB</span>
+        <span class="tech-tag">Docker Swarm</span>
+        <span class="tech-tag">AWS</span>
+        <span class="tech-tag">GitLab CI/CD</span>
+        <span class="tech-tag">Grafana</span>
+        <span class="tech-tag">Prometheus</span>
+        <span class="tech-tag">K6</span>
+        <span class="tech-tag">Kubernetes</span>
+        <span class="tech-tag">JFrog</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="exp-card reveal">
+    <div class="exp-meta">
+      <p class="exp-company">IDF</p>
+      <p class="exp-period">Military Service</p>
+      <p class="exp-loc">🇮🇱 Israel</p>
+    </div>
+    <div>
+      <h3 class="exp-title">Network Manager & Computer Technician</h3>
+      <p class="exp-body">Led a team of 4 in managing network infrastructure and computer systems. Gained hands-on experience with Data Communication and Networking, earning CCNA-level military certification.</p>
+      <div class="tech-tags">
+        <span class="tech-tag">Networking</span>
+        <span class="tech-tag">CCNA</span>
+        <span class="tech-tag">Team Leadership</span>
+        <span class="tech-tag">Linux/Unix</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PROJECTS ── -->
+<section id="projects">
+  <div class="reveal">
+    <p class="section-label">// 02 — Projects</p>
+    <h2 class="section-title">Things I've<br>Built</h2>
+  </div>
+
+  <div class="project-grid">
+    <div class="project-card reveal">
+      <div class="project-card-header">
+        <span class="project-icon">⚙️</span>
+        <div class="project-links">
+          <a class="project-link" href="https://github.com/yariv1052" target="_blank" title="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          </a>
+        </div>
+      </div>
+      <p class="project-name">async-job-ticket-system</p>
+      <p class="project-desc">A production-ready asynchronous job processing system built on AWS services and Kubernetes. Demonstrates real-world patterns for idempotency, retries, observability, error handling, and distributed system design.</p>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">AWS EC2</span>
+        <span class="project-tag">SQS</span>
+        <span class="project-tag">DynamoDB</span>
+        <span class="project-tag">Lambda</span>
+        <span class="project-tag">ECR</span>
+        <span class="project-tag">Kubernetes</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal">
+      <div class="project-card-header">
+        <span class="project-icon">🧠</span>
+        <div class="project-links">
+          <a class="project-link" href="https://github.com/yariv1052" target="_blank" title="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+          </a>
+        </div>
+      </div>
+      <p class="project-name">Attentiveness Recognition System</p>
+      <p class="project-desc">Final degree project — ML research focused on recognizing student attentiveness during online lessons using computer vision, threading, and convolutional neural networks for real-time classification.</p>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">PyTorch</span>
+        <span class="project-tag">OpenCV</span>
+        <span class="project-tag">CNN</span>
+        <span class="project-tag">Threading</span>
+        <span class="project-tag">ML Research</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── GITHUB ── -->
+<section id="github">
+  <div class="github-grid">
+    <div class="github-text">
+      <p class="section-label">// 03 — GitHub</p>
+      <h2 class="section-title">Open Source &<br>Public Work</h2>
+      <p>I build in public whenever I can. My repositories reflect my interest in distributed systems, cloud-native infrastructure, and production-grade engineering patterns.</p>
+      <p>From async job processing systems to ML experiments — the code tells the story.</p>
+      <a class="github-cta" href="https://github.com/yariv1052" target="_blank">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+        View GitHub Profile
+      </a>
+    </div>
+    <div class="github-stats-panel">
+      <div class="gh-stat-row">
+        <span class="gh-stat-label">Primary Language</span>
+        <span class="gh-stat-val">Python</span>
+      </div>
+      <div class="gh-stat-row">
+        <span class="gh-stat-label">Focus Areas</span>
+        <span class="gh-stat-val">Distributed Systems</span>
+      </div>
+      <div class="gh-stat-row">
+        <span class="gh-stat-label">Cloud Platform</span>
+        <span class="gh-stat-val">AWS</span>
+      </div>
+      <div class="gh-stat-row">
+        <span class="gh-stat-label">Infra & Orchestration</span>
+        <span class="gh-stat-val">Docker · K8s</span>
+      </div>
+      <div class="gh-stat-row">
+        <span class="gh-stat-label">CI/CD</span>
+        <span class="gh-stat-val">GitLab CI/CD</span>
+      </div>
+      <div class="lang-bar-wrap" style="margin-top:1.8rem">
+        <div class="lang-bar-label"><span>Python</span><span>75%</span></div>
+        <div class="lang-bar"><div class="lang-bar-fill" style="width:75%"></div></div>
+        <div class="lang-bar-label"><span>Shell / Infra</span><span>15%</span></div>
+        <div class="lang-bar"><div class="lang-bar-fill alt" style="width:15%"></div></div>
+        <div class="lang-bar-label"><span>Other</span><span>10%</span></div>
+        <div class="lang-bar"><div class="lang-bar-fill alt2" style="width:10%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ARTICLES ── -->
+<section id="articles">
+  <div class="reveal">
+    <p class="section-label">// 04 — Articles</p>
+    <h2 class="section-title">Writing on<br>Engineering</h2>
+  </div>
+
+  <div class="articles-grid">
+    <a class="article-card reveal" href="https://medium.com/@yariv1052" target="_blank">
+      <span class="article-tag">Distributed Systems</span>
+      <h3 class="article-title">Idempotency in Event-Driven Microservices: Lessons from Production</h3>
+      <p class="article-excerpt">How to design workflows that survive failures, retries, and duplicate messages — patterns we battle-tested at scale.</p>
+      <div class="article-footer">
+        <span class="article-date">Medium · @yariv1052</span>
+        <span class="article-arrow">→</span>
+      </div>
+    </a>
+    <a class="article-card reveal" href="https://medium.com/@yariv1052" target="_blank">
+      <span class="article-tag">Architecture</span>
+      <h3 class="article-title">RabbitMQ Dead Letter Queues: Your Safety Net for Fault-Tolerant Systems</h3>
+      <p class="article-excerpt">A practical guide to DLQs, structured retries and error orchestration that keeps your system alive even when things go wrong.</p>
+      <div class="article-footer">
+        <span class="article-date">Medium · @yariv1052</span>
+        <span class="article-arrow">→</span>
+      </div>
+    </a>
+    <a class="article-card reveal" href="https://medium.com/@yariv1052" target="_blank">
+      <span class="article-tag">Cloud</span>
+      <h3 class="article-title">Air-Gapped Deployments: Shipping Software Supply Chain Security Offline</h3>
+      <p class="article-excerpt">The constraints, architecture choices, and surprising lessons from deploying a cloud-native platform with no internet access.</p>
+      <div class="article-footer">
+        <span class="article-date">Medium · @yariv1052</span>
+        <span class="article-arrow">→</span>
+      </div>
+    </a>
+  </div>
+
+  <div class="medium-cta reveal">
+    <a href="https://medium.com/@yariv1052" target="_blank">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75S24 8.83 24 12z"/></svg>
+      Read all articles on Medium
+    </a>
+  </div>
+</section>
+
+<!-- ── SKILLS ── -->
+<section id="skills">
+  <div class="reveal">
+    <p class="section-label">// 05 — Skills</p>
+    <h2 class="section-title">Technologies<br>& Practices</h2>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-group reveal">
+      <p class="skill-group-title">Languages & Frameworks</p>
+      <div class="skill-item">Python</div>
+      <div class="skill-item">FastAPI</div>
+      <div class="skill-item">PyTorch</div>
+      <div class="skill-item">OpenCV</div>
+    </div>
+    <div class="skill-group reveal">
+      <p class="skill-group-title">Infrastructure & Cloud</p>
+      <div class="skill-item">AWS (EC2, Lambda, SQS, DynamoDB)</div>
+      <div class="skill-item">Docker · Docker Swarm</div>
+      <div class="skill-item">Kubernetes · K9s</div>
+      <div class="skill-item">GitLab CI/CD</div>
+    </div>
+    <div class="skill-group reveal">
+      <p class="skill-group-title">Data & Messaging</p>
+      <div class="skill-item">RabbitMQ</div>
+      <div class="skill-item">MongoDB</div>
+      <div class="skill-item">JFrog Artifactory</div>
+      <div class="skill-item">NPM · PyPI · Maven · NuGet</div>
+    </div>
+    <div class="skill-group reveal">
+      <p class="skill-group-title">Observability & Testing</p>
+      <div class="skill-item">Grafana · Prometheus</div>
+      <div class="skill-item">K6 Load Testing</div>
+      <div class="skill-item">Unittest · Mocking</div>
+      <div class="skill-item">Performance Profiling</div>
+    </div>
+    <div class="skill-group reveal">
+      <p class="skill-group-title">Architecture & Patterns</p>
+      <div class="skill-item">Event-Driven Architecture</div>
+      <div class="skill-item">Microservices</div>
+      <div class="skill-item">OOP · SOLID · Design Patterns</div>
+      <div class="skill-item">Cloud-Native Principles</div>
+    </div>
+    <div class="skill-group reveal">
+      <p class="skill-group-title">Tooling & OS</p>
+      <div class="skill-item">Linux / Unix · Windows</div>
+      <div class="skill-item">Git · GitLab</div>
+      <div class="skill-item">Claude · Cursor (AI-assisted dev)</div>
+      <div class="skill-item">Yarn · NPM</div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EDUCATION ── -->
+<section id="education">
+  <div class="reveal">
+    <p class="section-label">// 06 — Education</p>
+    <h2 class="section-title">Academic<br>Background</h2>
+  </div>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div class="edu-icon">🎓</div>
+      <h3 class="edu-degree">B.Sc. Software Engineering</h3>
+      <p class="edu-school">Sami Shamoon College of Engineering</p>
+      <p class="edu-desc">Final project: Attentiveness Recognition System — real-time ML classification using CNNs, PyTorch, and OpenCV.</p>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-icon">📡</div>
+      <h3 class="edu-degree">Data Communication & Networking</h3>
+      <p class="edu-school">CCNA — Military Diploma</p>
+      <p class="edu-desc">Networking fundamentals, routing & switching, and practical infrastructure management in a high-stakes operational environment.</p>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-icon">🖥️</div>
+      <h3 class="edu-degree">Computers & Electronics</h3>
+      <p class="edu-school">ORT Rehovot — Practical Engineer</p>
+      <p class="edu-desc">Foundational electronics and computer systems education, establishing the hardware and low-level knowledge underpinning software work.</p>
+    </div>
+    <div class="edu-card reveal" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:var(--accent-lt);border-color:rgba(13,122,95,.2)">
+      <div class="edu-icon">🤝</div>
+      <h3 class="edu-degree" style="color:var(--accent)">Israel Border Police</h3>
+      <p class="edu-school" style="color:var(--accent)">Volunteering</p>
+      <p class="edu-desc">Field Patrol Unit — giving back to the community while building discipline and operational readiness.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <p>Yariv Garala · Backend Engineer · Tel Aviv, Israel</p>
+  <p style="margin-top:.5rem; color: var(--rule);">yariv1052@gmail.com · Built with care, shipped with confidence.</p>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Stagger child reveals
+  document.querySelectorAll('.project-grid, .articles-grid, .skills-grid, .edu-grid').forEach(grid => {
+    grid.querySelectorAll('.reveal').forEach((child, i) => {
+      child.style.transitionDelay = `${i * 0.08}s`;
+    });
+  });
+</script>
+</body>
+</html>
