@@ -62,9 +62,19 @@
       padding-top: 72px;
     }
     .hero-left {
-      display: flex; flex-direction: column; justify-content: center;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
       padding: 5rem 3rem 5rem 4rem;
       border-right: 1px solid var(--rule);
+    }
+    .hero-identity {
+      display: flex; align-items: center; gap: 2rem;
+      margin-bottom: .5rem;
+    }
+    .hero-photo {
+      width: 150px; height: 150px; border-radius: 50%;
+      object-fit: cover; flex-shrink: 0;
+      box-shadow: 0 0 0 1px var(--rule), 0 0 0 5px var(--bg-card);
+      opacity: 0; animation: fadeUp .6s 0s forwards;
     }
     .hero-eyebrow {
       font-family: var(--mono); font-size: .78rem; color: var(--accent);
@@ -79,11 +89,11 @@
     .hero-name em { color: var(--accent); font-style: italic; }
     .hero-tagline {
       font-size: 1.05rem; color: var(--ink-soft); max-width: 400px;
-      margin-bottom: 2.8rem; font-weight: 400;
+      margin-bottom: 2.8rem; font-weight: 400; text-align: center;
       opacity: 0; animation: fadeUp .7s .35s forwards;
     }
     .hero-contacts {
-      display: flex; flex-wrap: wrap; gap: .75rem;
+      display: flex; flex-wrap: wrap; gap: .75rem; justify-content: center;
       opacity: 0; animation: fadeUp .7s .5s forwards;
     }
     .contact-pill {
@@ -340,6 +350,8 @@
       .nav-links { display: none; }
       #hero { grid-template-columns: 1fr; }
       .hero-left { padding: 3rem 1.5rem; border-right: none; }
+      .hero-photo { width: 100px; height: 100px; }
+      .hero-identity { gap: 1.25rem; }
       .hero-right { padding: 2rem 1.5rem; border-top: 1px solid var(--rule); }
       section { padding: 4rem 1.5rem; }
       #experience .exp-card { grid-template-columns: 1fr; gap: .5rem; }
@@ -367,8 +379,11 @@
 <!-- ── HERO ── -->
 <section id="hero">
   <div class="hero-left">
-    <p class="hero-eyebrow">// Backend Engineer · Tel Aviv, Israel</p>
-    <h1 class="hero-name">Yariv<br><em>Garala</em></h1>
+    <p class="hero-eyebrow" style="text-align:center">// Backend Engineer · Tel Aviv, Israel</p>
+    <div class="hero-identity" style="justify-content:center">
+      <img class="hero-photo" src="profile-bw.jpg" alt="Yariv Garala">
+      <h1 class="hero-name" style="text-align:left">Yariv<br><em>Garala</em></h1>
+    </div>
     <p class="hero-tagline">Building event-driven, distributed systems that scale — from architecture decisions to production delivery.</p>
     <div class="hero-contacts">
       <a class="contact-pill" href="mailto:yariv1052@gmail.com">
@@ -405,7 +420,7 @@
       </div>
       <div class="hero-stat">
         <span class="stat-num">0→1</span>
-        <span class="stat-label">Built a full SaaS security<br>platform from scratch</span>
+        <span class="stat-label">Built a full security<br>platform from scratch</span>
       </div>
     </div>
     <p class="hero-stack-title">// Core Stack</p>
@@ -415,10 +430,9 @@
       <span class="chip">RabbitMQ</span>
       <span class="chip">MongoDB</span>
       <span class="chip">Docker</span>
-      <span class="chip">AWS</span>
-      <span class="chip">Kubernetes</span>
       <span class="chip light">Event-Driven</span>
       <span class="chip light">Microservices</span>
+      <span class="chip light">AI-Augmented Dev</span>
     </div>
   </div>
 </section>
@@ -433,7 +447,7 @@
   <div class="exp-card reveal">
     <div class="exp-meta">
       <p class="exp-company">PTBOX</p>
-      <p class="exp-period">Aug 2022 – Present</p>
+      <p class="exp-period">Aug 2022 – Jan 2026</p>
       <p class="exp-loc">📍 Tel Aviv, Israel</p>
     </div>
     <div>
@@ -441,12 +455,13 @@
       <p class="exp-body">Cybersecurity-focused startup building a cloud-native Software Supply Chain Security platform from the ground up, across the full SDLC.</p>
       <ul class="exp-bullets">
         <li>Led design & implementation of an async, event-driven microservices platform (Python, FastAPI, RabbitMQ, MongoDB) integrating multiple third-party security scanners</li>
+        <li>Delivered on-prem and air-gapped deployments of the platform, meeting strict network isolation and operational constraints for defense-grade environments</li>
+        <li>Embraced AI-assisted development (Claude, Cursor, Codex) across the full SDLC — planning, architecture, implementation, and testing — while holding the line on code quality</li>
         <li>Made backend architecture decisions balancing scalability, performance, and reliability under strict network and operational constraints</li>
         <li>Improved system resilience through idempotent workflows, structured retries, DLQs, and fault-tolerant orchestration</li>
         <li>Containerized and orchestrated production services using Docker Swarm with cloud-native principles</li>
         <li>Worked extensively with package ecosystems (NPM, Yarn, PyPI, Maven, NuGet) and JFrog Artifactory</li>
         <li>Ensured production-grade quality via unit, load & E2E testing (Unittest, mocking, K6) and continuous performance profiling</li>
-        <li>Leveraged AI-assisted development tools (Claude, Cursor) to accelerate delivery while maintaining code quality</li>
       </ul>
       <div class="tech-tags">
         <span class="tech-tag">Python</span>
@@ -496,7 +511,7 @@
       <div class="project-card-header">
         <span class="project-icon">⚙️</span>
         <div class="project-links">
-          <a class="project-link" href="https://github.com/yariv1025" target="_blank" title="GitHub">
+          <a class="project-link" href="https://github.com/yariv1025/async-job-ticket-system" target="_blank" title="GitHub">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
           </a>
         </div>
@@ -516,22 +531,20 @@
 
     <div class="project-card reveal">
       <div class="project-card-header">
-        <span class="project-icon">🧠</span>
+        <span class="project-icon">🏗️</span>
         <div class="project-links">
-          <a class="project-link" href="https://github.com/yariv1025" target="_blank" title="GitHub">
+          <a class="project-link" href="https://github.com/yariv1025/fastapi-twelve-factor-approach-boilerplate" target="_blank" title="GitHub">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
           </a>
         </div>
       </div>
-      <p class="project-name">Attentiveness Recognition System</p>
-      <p class="project-desc">Final degree project — ML research focused on recognizing student attentiveness during online lessons using computer vision, threading, and convolutional neural networks for real-time classification.</p>
+      <p class="project-name">fastapi-twelve-factor-approach-boilerplate</p>
+      <p class="project-desc">A FastAPI boilerplate applying twelve-factor app principles — environment-based config, stateless processes, and clean separation of concerns for building scalable, production-ready services.</p>
       <div class="project-tags">
         <span class="project-tag">Python</span>
-        <span class="project-tag">PyTorch</span>
-        <span class="project-tag">OpenCV</span>
-        <span class="project-tag">CNN</span>
-        <span class="project-tag">Threading</span>
-        <span class="project-tag">ML Research</span>
+        <span class="project-tag">FastAPI</span>
+        <span class="project-tag">Twelve-Factor App</span>
+        <span class="project-tag">Architecture</span>
       </div>
     </div>
   </div>
@@ -544,7 +557,7 @@
       <p class="section-label">// 03 — GitHub</p>
       <h2 class="section-title">Open Source &<br>Public Work</h2>
       <p>I build in public whenever I can. My repositories reflect my interest in distributed systems, cloud-native infrastructure, and production-grade engineering patterns.</p>
-      <p>From async job processing systems to ML experiments — the code tells the story.</p>
+      <p>From async job processing systems to clean FastAPI architecture — the code tells the story.</p>
       <a class="github-cta" href="https://github.com/yariv1025" target="_blank">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.942.359.31.678.921.678 1.856 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
         View GitHub Profile
@@ -552,32 +565,25 @@
     </div>
     <div class="github-stats-panel">
       <div class="gh-stat-row">
+        <span class="gh-stat-label">Public Repositories</span>
+        <span class="gh-stat-val">19</span>
+      </div>
+      <div class="gh-stat-row">
         <span class="gh-stat-label">Primary Language</span>
         <span class="gh-stat-val">Python</span>
       </div>
       <div class="gh-stat-row">
-        <span class="gh-stat-label">Focus Areas</span>
-        <span class="gh-stat-val">Distributed Systems</span>
+        <span class="gh-stat-label">Building in Public Since</span>
+        <span class="gh-stat-val">2018</span>
       </div>
-      <div class="gh-stat-row">
-        <span class="gh-stat-label">Cloud Platform</span>
-        <span class="gh-stat-val">AWS</span>
-      </div>
-      <div class="gh-stat-row">
-        <span class="gh-stat-label">Infra & Orchestration</span>
-        <span class="gh-stat-val">Docker · K8s</span>
-      </div>
-      <div class="gh-stat-row">
-        <span class="gh-stat-label">CI/CD</span>
-        <span class="gh-stat-val">GitLab CI/CD</span>
-      </div>
+      <!-- Byte totals across public, non-fork repos on github.com/yariv1025 -->
       <div class="lang-bar-wrap" style="margin-top:1.8rem">
-        <div class="lang-bar-label"><span>Python</span><span>75%</span></div>
-        <div class="lang-bar"><div class="lang-bar-fill" style="width:75%"></div></div>
-        <div class="lang-bar-label"><span>Shell / Infra</span><span>15%</span></div>
-        <div class="lang-bar"><div class="lang-bar-fill alt" style="width:15%"></div></div>
-        <div class="lang-bar-label"><span>Other</span><span>10%</span></div>
-        <div class="lang-bar"><div class="lang-bar-fill alt2" style="width:10%"></div></div>
+        <div class="lang-bar-label"><span>Python</span><span>72%</span></div>
+        <div class="lang-bar"><div class="lang-bar-fill" style="width:72%"></div></div>
+        <div class="lang-bar-label"><span>Shell / Infra</span><span>8%</span></div>
+        <div class="lang-bar"><div class="lang-bar-fill alt" style="width:8%"></div></div>
+        <div class="lang-bar-label"><span>Other</span><span>20%</span></div>
+        <div class="lang-bar"><div class="lang-bar-fill alt2" style="width:20%"></div></div>
       </div>
     </div>
   </div>
@@ -590,31 +596,13 @@
     <h2 class="section-title">Writing on<br>Engineering</h2>
   </div>
 
-  <div class="articles-grid">
-    <a class="article-card reveal" href="https://medium.com/@yariv1052" target="_blank">
-      <span class="article-tag">Distributed Systems</span>
-      <h3 class="article-title">Idempotency in Event-Driven Microservices: Lessons from Production</h3>
-      <p class="article-excerpt">How to design workflows that survive failures, retries, and duplicate messages — patterns we battle-tested at scale.</p>
+  <div class="articles-grid" style="max-width:480px;margin:0 auto">
+    <a class="article-card reveal" href="https://medium.com/@yariv1052/why-is-software-supply-chain-security-a-must-0ac3242cdff8" target="_blank">
+      <span class="article-tag">Cybersecurity</span>
+      <h3 class="article-title">Why is Software Supply Chain Security a Must?</h3>
+      <p class="article-excerpt">Exploring why software supply chain security matters — common attack vectors like dependency confusion and typosquatting, and the multi-layered scanning approaches used to defend against them.</p>
       <div class="article-footer">
-        <span class="article-date">Medium · @yariv1052</span>
-        <span class="article-arrow">→</span>
-      </div>
-    </a>
-    <a class="article-card reveal" href="https://medium.com/@yariv1052" target="_blank">
-      <span class="article-tag">Architecture</span>
-      <h3 class="article-title">RabbitMQ Dead Letter Queues: Your Safety Net for Fault-Tolerant Systems</h3>
-      <p class="article-excerpt">A practical guide to DLQs, structured retries and error orchestration that keeps your system alive even when things go wrong.</p>
-      <div class="article-footer">
-        <span class="article-date">Medium · @yariv1052</span>
-        <span class="article-arrow">→</span>
-      </div>
-    </a>
-    <a class="article-card reveal" href="https://medium.com/@yariv1052" target="_blank">
-      <span class="article-tag">Cloud</span>
-      <h3 class="article-title">Air-Gapped Deployments: Shipping Software Supply Chain Security Offline</h3>
-      <p class="article-excerpt">The constraints, architecture choices, and surprising lessons from deploying a cloud-native platform with no internet access.</p>
-      <div class="article-footer">
-        <span class="article-date">Medium · @yariv1052</span>
+        <span class="article-date">Medium · Sep 2024</span>
         <span class="article-arrow">→</span>
       </div>
     </a>
@@ -623,7 +611,7 @@
   <div class="medium-cta reveal">
     <a href="https://medium.com/@yariv1052" target="_blank">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zm7.42 0c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75S24 8.83 24 12z"/></svg>
-      Read all articles on Medium
+      Follow me on Medium for more
     </a>
   </div>
 </section>
@@ -638,44 +626,49 @@
     <div class="skill-group reveal">
       <p class="skill-group-title">Languages & Frameworks</p>
       <div class="skill-item">Python</div>
-      <div class="skill-item">FastAPI</div>
-      <div class="skill-item">PyTorch</div>
-      <div class="skill-item">OpenCV</div>
+      <div class="skill-item">JavaScript</div>
+      <div class="skill-item">FastAPI · Pydantic</div>
     </div>
     <div class="skill-group reveal">
-      <p class="skill-group-title">Infrastructure & Cloud</p>
-      <div class="skill-item">AWS (EC2, Lambda, SQS, DynamoDB)</div>
-      <div class="skill-item">Docker · Docker Swarm</div>
-      <div class="skill-item">Kubernetes · K9s</div>
+      <p class="skill-group-title">CI/CD & DevOps</p>
       <div class="skill-item">GitLab CI/CD</div>
+      <div class="skill-item">Git · JFrog Artifactory</div>
+      <div class="skill-item">Docker · Docker Swarm</div>
     </div>
     <div class="skill-group reveal">
       <p class="skill-group-title">Data & Messaging</p>
       <div class="skill-item">RabbitMQ</div>
       <div class="skill-item">MongoDB</div>
-      <div class="skill-item">JFrog Artifactory</div>
       <div class="skill-item">NPM · PyPI · Maven · NuGet</div>
     </div>
     <div class="skill-group reveal">
       <p class="skill-group-title">Observability & Testing</p>
-      <div class="skill-item">Grafana · Prometheus</div>
+      <div class="skill-item">Prometheus · Grafana</div>
+      <div class="skill-item">Structured Logging</div>
       <div class="skill-item">K6 Load Testing</div>
       <div class="skill-item">Unittest · Mocking</div>
-      <div class="skill-item">Performance Profiling</div>
     </div>
     <div class="skill-group reveal">
-      <p class="skill-group-title">Architecture & Patterns</p>
-      <div class="skill-item">Event-Driven Architecture</div>
-      <div class="skill-item">Microservices</div>
+      <p class="skill-group-title">Architecture & Practices</p>
+      <div class="skill-item">Event-Driven · Microservices</div>
+      <div class="skill-item">Cloud-Native · On-Prem / Air-Gapped</div>
       <div class="skill-item">OOP · SOLID · Design Patterns</div>
-      <div class="skill-item">Cloud-Native Principles</div>
     </div>
     <div class="skill-group reveal">
       <p class="skill-group-title">Tooling & OS</p>
       <div class="skill-item">Linux / Unix · Windows</div>
       <div class="skill-item">Git · GitLab</div>
-      <div class="skill-item">Claude · Cursor (AI-assisted dev)</div>
-      <div class="skill-item">Yarn · NPM</div>
+    </div>
+    <div class="skill-group reveal" style="grid-column:1 / -1; background:var(--accent-lt); border-color:rgba(13,122,95,.2)">
+      <p class="skill-group-title">AI-Augmented Development</p>
+      <div class="skill-item">Claude Code · Cursor · Codex</div>
+      <p style="font-size:.85rem;color:var(--ink-soft);line-height:1.7;margin-top:.6rem">I've embraced AI as part of how I work — using it across the full SDLC, from planning and architecture through development and testing — while still holding the line on code quality.</p>
+    </div>
+    <div class="skill-group reveal" style="grid-column:1 / -1; background:var(--accent-lt); border-color:rgba(13,122,95,.2)">
+      <p class="skill-group-title">Familiar With</p>
+      <div class="skill-item">AWS — EC2, Lambda, SQS, DynamoDB, ECR</div>
+      <div class="skill-item">Kubernetes (K8s) · K9s</div>
+      <div class="skill-item">PostgreSQL</div>
     </div>
   </div>
 </section>
@@ -697,13 +690,13 @@
       <div class="edu-icon">📡</div>
       <h3 class="edu-degree">Data Communication & Networking</h3>
       <p class="edu-school">CCNA — Military Diploma</p>
-      <p class="edu-desc">Networking fundamentals, routing & switching, and practical infrastructure management in a high-stakes operational environment.</p>
+      <p class="edu-desc">Networking fundamentals, routing & switching, and practical infrastructure management.</p>
     </div>
     <div class="edu-card reveal">
       <div class="edu-icon">🖥️</div>
       <h3 class="edu-degree">Computers & Electronics</h3>
       <p class="edu-school">ORT Rehovot — Practical Engineer</p>
-      <p class="edu-desc">Foundational electronics and computer systems education, establishing the hardware and low-level knowledge underpinning software work.</p>
+      <p class="edu-desc">Electronics and computer systems education, establishing the hardware and low-level knowledge underpinning software work.</p>
     </div>
     <!-- <div class="edu-card reveal" style="display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;background:var(--accent-lt);border-color:rgba(13,122,95,.2)">
       <div class="edu-icon">🤝</div>
